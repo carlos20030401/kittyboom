@@ -1,0 +1,10 @@
+export type OrderStatus='pending'|'finalized'|'cancelled';
+export const ORDER_STATUS_LABELS:Record<OrderStatus,string>={pending:'Pendiente',finalized:'Finalizado',cancelled:'Cancelado'};
+export const PAYMENT_METHOD_LABELS:Record<string,string>={cash:'Efectivo',yape:'Yape',plin:'Plin',transfer:'Transferencia',other:'Otro'};
+export const PAYMENT_STATUS_LABELS:Record<string,string>={pending:'Pendiente',paid:'Pagado'};
+export const SALES_CHANNEL_LABELS:Record<string,string>={web:'Tienda web',whatsapp:'WhatsApp',instagram:'Instagram',in_store:'Presencial',other:'Otro'};
+export const isPendingOrder=(status:string)=>status==='pending';
+export const orderStatusLabel=(status:string)=>ORDER_STATUS_LABELS[status as OrderStatus]??status;
+export const paymentMethodLabel=(method:string)=>PAYMENT_METHOD_LABELS[method]??method;
+export const paymentStatusLabel=(status:string)=>PAYMENT_STATUS_LABELS[status]??status;
+export const salesChannelLabel=(channel:string)=>SALES_CHANNEL_LABELS[channel]??channel;
