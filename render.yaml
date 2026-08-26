@@ -2,10 +2,13 @@ services:
   - type: web
     name: kittyboom-api
     runtime: docker
+    plan: free
+    region: virginia
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     healthCheckPath: /health
-    autoDeploy: false
+    autoDeployTrigger: off
+    initialDeployHook: python -m app.create_admin
     envVars:
       - key: ENVIRONMENT
         value: production
@@ -25,5 +28,9 @@ services:
         sync: false
       - key: CLOUDINARY_FOLDER
         value: kittyboom
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
       - key: BUSINESS_TIMEZONE
         value: America/Lima
