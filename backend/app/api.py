@@ -124,7 +124,7 @@ async def upload_image(product_id:int,file:UploadFile=File(...),is_primary:bool=
     if is_primary:
         for old in db.scalars(select(ProductImage).where(ProductImage.product_id==product_id)).all(): old.is_primary=False
     position=db.scalar(select(func.count(ProductImage.id)).where(ProductImage.product_id==product_id)) or 0
-    image=ProductImage(product_id=product_id,position=position,is_primary=is_primary,**saved); db.add(image); db.flush(); audit(db,user,"upload_image","product",product_id); db.commit(); db.refresh(image); return image
+    image=ProductImage(product_id=product_id,position=position,is_primary=is_primary,image_url=saved["url"],filename=saved["filename"],mime_type=saved["mime_type"],size=saved["size"]); db.add(image); db.flush(); audit(db,user,"upload_image","product",product_id); db.commit(); db.refresh(image); return image
 @router.patch("/admin/products/{product_id}/images/{image_id}")
 def update_image(product_id:int,image_id:int,position:int|None=None,is_primary:bool|None=None,user:User=Depends(current_user),db:Session=Depends(get_db)):
     image=db.get(ProductImage,image_id)
